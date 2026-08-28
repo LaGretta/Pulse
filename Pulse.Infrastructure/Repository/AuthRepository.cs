@@ -31,7 +31,7 @@ public class AuthRepository : IAuthRepository
 
     public async Task<RefreshToken?> GetRefreshTokenAsync(string token, CancellationToken ct) =>
         await _context.RefreshTokens
-            .Include(rt => rt.User)                    
+            .Include(rt => rt.User)
             .FirstOrDefaultAsync(rt => rt.Token == token, ct);
 
     public async Task SaveChangesAsync(CancellationToken ct) =>
