@@ -14,6 +14,7 @@ public class PulseDbContext : DbContext
     public DbSet<MessageReaction> MessageReactions { get; set; }
     public DbSet<Attachment> Attachments { get; set; }
     public DbSet<MessageReadReceipt> MessageReadReceipts { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -93,6 +94,15 @@ public class PulseDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+        modelBuilder.Entity<RefreshToken>(e =>
+        {
+            e.HasIndex(x => x.Token).IsUnique();
+
+            e.HasOne(x => x.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

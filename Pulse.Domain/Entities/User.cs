@@ -15,4 +15,5 @@ public class User
 
     public List<Message> Messages { get; set; } = new();
     public List<ChatRoomMember> Memberships { get; set; } = new();
+    public List<RefreshToken> RefreshTokens { get; set; } = new();
 }
